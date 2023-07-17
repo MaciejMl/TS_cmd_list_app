@@ -1,0 +1,28 @@
+{
+  "name": "ts_cmd_list_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaciejMl/TS_cmd_list_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaciejMl/TS_cmd_list_app/issues"
+  },
+  "homepage": "https://github.com/MaciejMl/TS_cmd_list_app#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "consola": "^2.15.3",
+    "inquirer": "^8.2.4",
+    "nodemon": "^2.0.20",
+    "ts-node": "^8.10.2"
+  }
+}
