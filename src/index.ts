@@ -4,6 +4,7 @@ const Consola = require('consola');
 enum Action {
   List = 'list',
   Add = 'add',
+  Edit = 'edit',
   Remove = 'remove',
   Quit = 'quit',
 }
@@ -95,6 +96,31 @@ class UserData {
     }
   }
 
+  public edit(userName: string, editedUser: User): void {
+    const index = this.data.findIndex((user) => user.name === userName);
+    if (index !== -1) {
+      const userToUpdate = this.data[index];
+      if (editedUser.name && typeof editedUser.name === 'string') {
+        userToUpdate.name = editedUser.name;
+      }
+      if (editedUser.age && typeof editedUser.age === 'number') {
+        userToUpdate.age = editedUser.age;
+
+        Message.showColorized(
+          MessageVariant.Success,
+          'User has been successfully modified!'
+        );
+      } else {
+        Message.showColorized(
+          MessageVariant.Info,
+          'User has been successfully modified!'
+        );
+      }
+    } else {
+      Message.showColorized(MessageVariant.Error, 'User not found...');
+    }
+  }
+
   public remove(userName: string): void {
     const index = this.data.findIndex((user) => user.name === userName);
     if (index !== -1) {
@@ -114,6 +140,7 @@ Message.showColorized(MessageVariant.Info, 'Available actions');
 console.log('\n');
 console.log('list – show all users');
 console.log('add – add new user to the list');
+console.log('edit – edit user from the list');
 console.log('remove – remove user from the list');
 console.log('quit – quit the app');
 console.log('\n');
@@ -147,6 +174,28 @@ const startApp = () => {
           ]);
           users.add(user);
           break;
+        case Action.Edit:
+          const userToEdit = await inquirer.prompt([
+            {
+              name: 'name',
+              type: 'input',
+              message: 'Enter name to edit',
+            },
+          ]);
+          const editedUser = await inquirer.prompt([
+            {
+              name: 'name',
+              type: 'input',
+              message: 'Change name',
+            },
+            {
+              name: 'age',
+              type: 'number',
+              message: 'Change age',
+            },
+          ]);
+          users.edit(userToEdit.name, editedUser);
+          break;
         case Action.Remove:
           const name = await inquirer.prompt([
             {
@@ -160,6 +209,8 @@ const startApp = () => {
         case Action.Quit:
           Message.showColorized(MessageVariant.Info, 'Bye bye!');
           return;
+        default:
+          Message.showColorized(MessageVariant.Info, 'Command not found!');
       }
 
       startApp();
